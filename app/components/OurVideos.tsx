@@ -9,19 +9,19 @@ export default function OurVideos() {
     {
       title: "Corporate Promo",
       category: "Commercial",
-      videoUrl: "/videos/video1.mp4",
+      videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video1.mp4",
       duration: "2:30",
     },
     {
       title: "Product Launch",
       category: "Marketing",
-      videoUrl: "/videos/video2.mp4",
+      videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video2.mp4",
       duration: "1:45",
     },
     {
       title: "Brand Story",
       category: "Documentary",
-      videoUrl: "/videos/video3.mp4",
+      videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video3.mp4",
       duration: "3:15",
     },
   ];
