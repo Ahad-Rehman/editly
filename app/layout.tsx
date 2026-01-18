@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Bambar Group Portfolio",
+  title: "editly",
   description: "My personal portfolio",
 };
 
