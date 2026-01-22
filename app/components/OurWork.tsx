@@ -97,47 +97,81 @@ export default function OurWork() {
         </div>
 
         {/* Plans Section */}
-        <div className="mt-24">
-          <div className="text-center mb-10">
-            <h3 className="text-3xl font-bold">Plans for Modern Creators</h3>
-            <p className="text-gray-400 max-w-2xl mx-auto mt-3">Choose a plan optimized for speed, collaboration and cinematic quality</p>
+        <div className="mt-24 relative">
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+            <svg className="absolute -left-16 -top-16 opacity-10" width="520" height="520" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="260" cy="260" r="200" fill="#9ae600" />
+            </svg>
+            <svg className="absolute -right-24 -bottom-24 opacity-8" width="420" height="420" viewBox="0 0 420 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="0" width="420" height="420" rx="80" fill="#0b0b0b" />
+            </svg>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="text-center mb-10 relative">
+            <h3 className="text-3xl md:text-4xl font-bold">Plans for Modern Creators</h3>
+            <p className="text-gray-400 max-w-3xl mx-auto mt-3">Flexible offerings designed around speed, collaboration and cinematic quality — pick a style, we'll handle the rest.</p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3 relative">
             <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
               <div className="absolute -top-4 left-6 bg-primary text-black font-bold px-3 py-1 rounded-lg text-sm">Popular</div>
-              <div className="text-4xl font-bold text-primary mb-3">Essential</div>
-              <div className="text-xl text-white font-semibold mb-4">$199</div>
-              <p className="text-gray-400 mb-6">Fast turnaround for social clips and promos</p>
-              <ul className="text-sm text-gray-400 space-y-2 mb-6">
-                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />48-72 hour turnaround</li>
-                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Basic color & audio</li>
-                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />2 rounds of revisions</li>
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
+                  <path d="M3 7v10a2 2 0 002 2h14V5H5a2 2 0 00-2 2z" fill="#9ae600" />
+                  <path d="M21 5h-6l-2-2H7v4" fill="#000" opacity="0.2" />
+                </svg>
+                <div>
+                  <div className="text-2xl font-bold text-primary">Essential</div>
+                  <div className="text-sm text-gray-400">Perfect for short-form content & promos</div>
+                </div>
+              </div>
+
+              <p className="text-gray-400 mb-6">Fast turnarounds and tight edits focused on social performance and clarity.</p>
+              <ul className="text-sm text-gray-400 space-y-3 mb-6">
+                <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> 48-72 hour turnaround</li>
+                <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> Basic color & audio polish</li>
+                <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> 2 rounds of revisions</li>
               </ul>
-              <a href="#contact" className="inline-block bg-transparent border-2 border-primary text-primary font-semibold px-6 py-3 rounded-full hover:bg-primary hover:text-black transition">Select Plan</a>
+              <a href="#contact" className="inline-block bg-transparent border-2 border-primary text-primary font-semibold px-6 py-3 rounded-full hover:bg-primary hover:text-black transition">Select</a>
             </div>
 
             <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center transform scale-105 shadow-2xl">
               <div className="absolute -top-4 left-6 bg-primary text-black font-bold px-3 py-1 rounded-lg text-sm">Best value</div>
-              <div className="text-4xl font-bold text-primary mb-3">Professional</div>
-              <div className="text-xl text-white font-semibold mb-4">$499</div>
-              <p className="text-gray-400 mb-6">End-to-end editing with motion graphics and grading</p>
-              <ul className="text-sm text-gray-400 space-y-2 mb-6">
-                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />1 week delivery</li>
-                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Motion graphics & titles</li>
-                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Color grading & audio mixing</li>
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2L15 8l6 .5-4.5 3.5L18 20l-6-3-6 3 1.5-8L3 8.5 9 8 12 2z" fill="#9ae600" />
+                </svg>
+                <div>
+                  <div className="text-2xl font-bold text-primary">Professional</div>
+                  <div className="text-sm text-gray-400">End-to-end editing with motion graphics & polish</div>
+                </div>
+              </div>
+
+              <p className="text-gray-400 mb-6">Comprehensive edits with motion design, color grading and mixing for brand-forward storytelling.</p>
+              <ul className="text-sm text-gray-400 space-y-3 mb-6">
+                <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> 1 week delivery</li>
+                <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> Motion graphics & titles</li>
+                <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> Color grading & audio mixing</li>
               </ul>
-              <a href="#contact" className="inline-block bg-primary text-black font-semibold px-6 py-3 rounded-full">Select Plan</a>
+              <a href="#contact" className="inline-block bg-primary text-black font-semibold px-6 py-3 rounded-full">Select</a>
             </div>
 
             <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
-              <div className="text-4xl font-bold text-primary mb-3">Studio</div>
-              <div className="text-xl text-white font-semibold mb-4">Custom</div>
-              <p className="text-gray-400 mb-6">Full-service production, collaboration, and delivery</p>
-              <ul className="text-sm text-gray-400 space-y-2 mb-6">
-                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Dedicated project manager</li>
-                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Premium VFX & color pipeline</li>
-                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Priority support & revisions</li>
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
+                  <path d="M12 2a10 10 0 100 20 10 10 0 000-20z" fill="#9ae600" />
+                </svg>
+                <div>
+                  <div className="text-2xl font-bold text-primary">Studio</div>
+                  <div className="text-sm text-gray-400">Tailored for brands, agencies & long-term partnerships</div>
+                </div>
+              </div>
+
+              <p className="text-gray-400 mb-6">White-glove service with dedicated management, VFX pipelines, and priority delivery.</p>
+              <ul className="text-sm text-gray-400 space-y-3 mb-6">
+                <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> Dedicated project manager</li>
+                <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> Premium VFX & color pipeline</li>
+                <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> Priority support & revisions</li>
               </ul>
               <a href="#contact" className="inline-block bg-transparent border-2 border-white/10 text-white font-semibold px-6 py-3 rounded-full hover:bg-primary hover:text-black transition">Contact Us</a>
             </div>
