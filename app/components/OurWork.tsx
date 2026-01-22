@@ -108,7 +108,7 @@ export default function OurWork() {
           </div>
 
           <div className="text-center mb-10 relative">
-            <h3 className="text-3xl md:text-4xl font-bold">Plans for Modern Creators</h3>
+            <h3 className="text-3xl md:text-4xl font-bold">Our Plans</h3>
             <p className="text-gray-400 max-w-3xl mx-auto mt-3">Flexible offerings designed around speed, collaboration and cinematic quality — pick a style, we'll handle the rest.</p>
           </div>
 
@@ -132,7 +132,7 @@ export default function OurWork() {
                 <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> Basic color & audio polish</li>
                 <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> 2 rounds of revisions</li>
               </ul>
-              <a href="#contact" className="inline-block bg-transparent border-2 border-primary text-primary font-semibold px-6 py-3 rounded-full hover:bg-primary hover:text-black transition">Select</a>
+              <a href="#contact" className="inline-block bg-transparent border-2 border-primary text-primary font-semibold px-6 mt-11 py-3 rounded-full hover:bg-primary hover:text-black transition">Select</a>
             </div>
 
             <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center transform scale-105 shadow-2xl">
@@ -173,7 +173,7 @@ export default function OurWork() {
                 <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> Premium VFX & color pipeline</li>
                 <li className="flex items-center justify-center gap-2"><svg width="10" height="10" viewBox="0 0 10 10" className="text-primary"><circle cx="5" cy="5" r="5" fill="#9ae600"/></svg> Priority support & revisions</li>
               </ul>
-              <a href="#contact" className="inline-block bg-transparent border-2 border-white/10 text-white font-semibold px-6 py-3 rounded-full hover:bg-primary hover:text-black transition">Contact Us</a>
+              <a href="#contact" className="inline-block bg-transparent border-2 border-white/10 text-white font-semibold px-6 py-3 rounded-full hover:bg-primary hover:text-black transition">Select</a>
             </div>
           </div>
         </div>

@@ -13,8 +13,11 @@ export default function VideosPage() {
 
         <div className="flex items-center justify-between mb-6">
           <Link href="/" className="text-gray-400 hover:text-white">← Back</Link>
-          <Link href="#contact" className="bg-primary text-black px-4 py-2 rounded-full text-sm font-semibold">Contact</Link>
-        </div>
+            <button
+              className="bg-primary hover:bg-primary-dark text-black font-semibold px-6 py-2 rounded-full transition-all hover:scale-105"
+            >
+              Contact Us
+            </button>        </div>
 
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">All Videos — <span className="gradient-text">Showreel & Projects</span></h1>

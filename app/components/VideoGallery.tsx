@@ -23,12 +23,6 @@ export default function VideoGallery({ videos }: { videos?: Array<{ title: strin
       <div className="section-container">
         <div className="flex items-center justify-between mb-8 gap-4">
           <div className="flex items-center gap-4">
-            <Link href="/" className="flex items-center gap-2 bg-gray-900/60 hover:bg-gray-900/80 text-white px-3 py-2 rounded-lg">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
-              </svg>
-              Back
-            </Link>
             <h2 className="text-3xl font-bold">Video Gallery</h2>
           </div>
 
