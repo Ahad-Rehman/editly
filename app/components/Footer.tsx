@@ -34,7 +34,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand column */}
           <div>
-            <h3 className="text-2xl font-bold gradient-text mb-4">VideoEditor</h3>
+            <h3 className="text-2xl font-bold gradient-text mb-4">editly</h3>
             <p className="text-gray-400 mb-6 leading-relaxed">
               Transforming visions into cinematic masterpieces, one frame at a time.
             </p>

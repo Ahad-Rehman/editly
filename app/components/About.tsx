@@ -10,17 +10,17 @@ export default function About() {
 
   const team = [
     {
-      name: "Alex Rivera",
+      name: "Ahmar Khan",
       role: "Lead Editor",
       experience: "10+ Years",
     },
     {
-      name: "Sarah Chen",
+      name: "Ahsan Khan",
       role: "Motion Designer",
       experience: "8+ Years",
     },
     {
-      name: "Marcus Johnson",
+      name: "Uzair Niazi",
       role: "Colorist",
       experience: "12+ Years",
     },
