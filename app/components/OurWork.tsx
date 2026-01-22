@@ -104,37 +104,42 @@ export default function OurWork() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3">
-            <div className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center">
-              <div className="text-4xl font-bold text-primary mb-4">Essential</div>
+            <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
+              <div className="absolute -top-4 left-6 bg-primary text-black font-bold px-3 py-1 rounded-lg text-sm">Popular</div>
+              <div className="text-4xl font-bold text-primary mb-3">Essential</div>
+              <div className="text-xl text-white font-semibold mb-4">$199</div>
               <p className="text-gray-400 mb-6">Fast turnaround for social clips and promos</p>
               <ul className="text-sm text-gray-400 space-y-2 mb-6">
-                <li>- 48-72 hour turnaround</li>
-                <li>- Basic color & audio</li>
-                <li>- 2 rounds of revisions</li>
+                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />48-72 hour turnaround</li>
+                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Basic color & audio</li>
+                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />2 rounds of revisions</li>
               </ul>
-              <a href="#contact" className="inline-block bg-primary text-black font-semibold px-6 py-3 rounded-full">Select Plan</a>
+              <a href="#contact" className="inline-block bg-transparent border-2 border-primary text-primary font-semibold px-6 py-3 rounded-full hover:bg-primary hover:text-black transition">Select Plan</a>
             </div>
 
-            <div className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center">
-              <div className="text-4xl font-bold text-primary mb-4">Professional</div>
+            <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center transform scale-105 shadow-2xl">
+              <div className="absolute -top-4 left-6 bg-primary text-black font-bold px-3 py-1 rounded-lg text-sm">Best value</div>
+              <div className="text-4xl font-bold text-primary mb-3">Professional</div>
+              <div className="text-xl text-white font-semibold mb-4">$499</div>
               <p className="text-gray-400 mb-6">End-to-end editing with motion graphics and grading</p>
               <ul className="text-sm text-gray-400 space-y-2 mb-6">
-                <li>- 1 week delivery</li>
-                <li>- Motion graphics & titles</li>
-                <li>- Color grading & audio mixing</li>
+                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />1 week delivery</li>
+                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Motion graphics & titles</li>
+                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Color grading & audio mixing</li>
               </ul>
               <a href="#contact" className="inline-block bg-primary text-black font-semibold px-6 py-3 rounded-full">Select Plan</a>
             </div>
 
-            <div className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center">
-              <div className="text-4xl font-bold text-primary mb-4">Studio</div>
+            <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
+              <div className="text-4xl font-bold text-primary mb-3">Studio</div>
+              <div className="text-xl text-white font-semibold mb-4">Custom</div>
               <p className="text-gray-400 mb-6">Full-service production, collaboration, and delivery</p>
               <ul className="text-sm text-gray-400 space-y-2 mb-6">
-                <li>- Dedicated project manager</li>
-                <li>- Premium VFX & color pipeline</li>
-                <li>- Priority support & revisions</li>
+                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Dedicated project manager</li>
+                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Premium VFX & color pipeline</li>
+                <li className="flex items-center justify-center gap-2"><span className="w-2 h-2 rounded-full bg-primary" />Priority support & revisions</li>
               </ul>
-              <a href="#contact" className="inline-block bg-primary text-black font-semibold px-6 py-3 rounded-full">Select Plan</a>
+              <a href="#contact" className="inline-block bg-transparent border-2 border-white/10 text-white font-semibold px-6 py-3 rounded-full hover:bg-primary hover:text-black transition">Contact Us</a>
             </div>
           </div>
         </div>

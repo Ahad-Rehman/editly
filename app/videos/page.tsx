@@ -1,9 +1,9 @@
-import OurVideos from "../components/OurVideos";
+import VideoGallery from "../components/VideoGallery";
 
 export default function VideosPage() {
   return (
-    <div className="min-h-screen pt-28 bg-black">
-      <OurVideos />
+    <div className="min-h-screen pt-24 bg-black">
+      <VideoGallery />
     </div>
   );
 }
