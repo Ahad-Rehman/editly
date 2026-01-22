@@ -75,9 +75,7 @@ export default function OurVideos() {
               <div className="p-6 bg-gray-900/50 border border-gray-800 group-hover:border-primary/50 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-xl font-semibold">{video.title}</h3>
-                  <span className="text-xs text-primary bg-primary/10 px-3 py-1 rounded-full">
-                    {video.category}
-                  </span>
+                  
                 </div>
               </div>
             </div>
