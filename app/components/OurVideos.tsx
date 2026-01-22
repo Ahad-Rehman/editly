@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function OurVideos() {
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
@@ -75,7 +76,6 @@ export default function OurVideos() {
               <div className="p-6 bg-gray-900/50 border border-gray-800 group-hover:border-primary/50 transition-colors">
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-xl font-semibold">{video.title}</h3>
-                  
                 </div>
               </div>
             </div>
@@ -83,9 +83,11 @@ export default function OurVideos() {
         </div>
 
         <div className="text-center mt-12">
-          <button className="border-2 border-primary text-primary hover:bg-primary hover:text-black font-semibold px-8 py-3 rounded-full transition-all hover:scale-105">
-            View All Videos
-          </button>
+          <Link href="/videos" className="inline-block">
+            <span className="inline-block border-2 border-primary text-primary hover:bg-primary hover:text-black font-semibold px-8 py-3 rounded-full transition-all hover:scale-105">
+              View All Videos
+            </span>
+          </Link>
         </div>
       </div>
 

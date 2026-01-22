@@ -95,6 +95,49 @@ export default function OurWork() {
             Start Your Project
           </button>
         </div>
+
+        {/* Plans Section */}
+        <div className="mt-24">
+          <div className="text-center mb-10">
+            <h3 className="text-3xl font-bold">Plans for Modern Creators</h3>
+            <p className="text-gray-400 max-w-2xl mx-auto mt-3">Choose a plan optimized for speed, collaboration and cinematic quality</p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            <div className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center">
+              <div className="text-4xl font-bold text-primary mb-4">Essential</div>
+              <p className="text-gray-400 mb-6">Fast turnaround for social clips and promos</p>
+              <ul className="text-sm text-gray-400 space-y-2 mb-6">
+                <li>- 48-72 hour turnaround</li>
+                <li>- Basic color & audio</li>
+                <li>- 2 rounds of revisions</li>
+              </ul>
+              <a href="#contact" className="inline-block bg-primary text-black font-semibold px-6 py-3 rounded-full">Select Plan</a>
+            </div>
+
+            <div className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center">
+              <div className="text-4xl font-bold text-primary mb-4">Professional</div>
+              <p className="text-gray-400 mb-6">End-to-end editing with motion graphics and grading</p>
+              <ul className="text-sm text-gray-400 space-y-2 mb-6">
+                <li>- 1 week delivery</li>
+                <li>- Motion graphics & titles</li>
+                <li>- Color grading & audio mixing</li>
+              </ul>
+              <a href="#contact" className="inline-block bg-primary text-black font-semibold px-6 py-3 rounded-full">Select Plan</a>
+            </div>
+
+            <div className="p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center">
+              <div className="text-4xl font-bold text-primary mb-4">Studio</div>
+              <p className="text-gray-400 mb-6">Full-service production, collaboration, and delivery</p>
+              <ul className="text-sm text-gray-400 space-y-2 mb-6">
+                <li>- Dedicated project manager</li>
+                <li>- Premium VFX & color pipeline</li>
+                <li>- Priority support & revisions</li>
+              </ul>
+              <a href="#contact" className="inline-block bg-primary text-black font-semibold px-6 py-3 rounded-full">Select Plan</a>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
