@@ -113,7 +113,7 @@ export default function OurWork() {
           </div>
 
           <div className="grid gap-8 md:grid-cols-3 relative">
-            <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
+            <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center hover:scale-105 hover:border-2 hover:border-primary transition-transform duration-300">
               <div className="absolute -top-4 left-6 bg-primary text-black font-bold px-3 py-1 rounded-lg text-sm">Popular</div>
               <div className="flex items-center justify-center gap-3 mb-4">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
@@ -135,7 +135,7 @@ export default function OurWork() {
               <a href="#contact" className="inline-block bg-transparent border-2 border-primary text-primary font-semibold px-6 mt-11 py-3 rounded-full hover:bg-primary hover:text-black transition">Select</a>
             </div>
 
-            <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center transform scale-105 shadow-2xl">
+            <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center transform scale-105 shadow-2xl hover:border-2 hover:border-primary">
               <div className="absolute -top-4 left-6 bg-primary text-black font-bold px-3 py-1 rounded-lg text-sm">Best value</div>
               <div className="flex items-center justify-center gap-3 mb-4">
                 <svg width="44" height="44" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -156,7 +156,7 @@ export default function OurWork() {
               <a href="#contact" className="inline-block bg-primary text-black font-semibold px-6 py-3 rounded-full">Select</a>
             </div>
 
-            <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center hover:scale-105 transition-transform duration-300">
+            <div className="relative p-8 bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl text-center hover:scale-105 hover:border-2 hover:border-primary transition-transform duration-300">
               <div className="flex items-center justify-center gap-3 mb-4">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-primary">
                   <path d="M12 2a10 10 0 100 20 10 10 0 000-20z" fill="#9ae600" />
