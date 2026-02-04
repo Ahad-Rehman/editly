@@ -11,7 +11,7 @@ type GalleryVideo = {
   vimeoId?: string;
 };
 
-export default function VideoGallery({ videos }: { videos?: Array<GalleryVideo> }) {
+export default function VideoGallery({ videos, isAdmin, onDelete }: { videos?: Array<GalleryVideo>; isAdmin?: boolean; onDelete?: (index: number) => void }) {
   const defaultVideos = videos ?? [
     { title: "Wedding Teaser", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video1.mp4", duration: "2:30" },
     { title: "George&Gordon Wedding", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video2.mp4", duration: "1:45" },
@@ -63,8 +63,24 @@ export default function VideoGallery({ videos }: { videos?: Array<GalleryVideo> 
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div className="p-4 bg-gradient-to-t from-gray-900/70 to-transparent">
-                <h3 className="text-lg font-semibold text-white">{v.title}</h3>
-                <div className="mt-2 text-sm text-gray-400">Click to open player</div>
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{v.title}</h3>
+                    <div className="mt-2 text-sm text-gray-400">Click to open player</div>
+                  </div>
+                  {isAdmin && onDelete && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete(i);
+                      }}
+                      className="shrink-0 bg-red-500/20 text-red-300 border border-red-500/30 px-3 py-1 rounded-full text-xs hover:bg-red-500/30"
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           ))}

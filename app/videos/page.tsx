@@ -52,6 +52,17 @@ export default function VideosPage() {
   }, [customVideos, hasLoaded]);
 
   const allVideos = useMemo(() => [...baseVideos, ...customVideos], [customVideos]);
+  const handleDeleteVideo = (index: number) => {
+    const customIndex = index - baseVideos.length;
+    if (customIndex < 0) {
+      setError("Default videos cannot be deleted.");
+      setSuccess(null);
+      return;
+    }
+    setCustomVideos((prev) => prev.filter((_, i) => i !== customIndex));
+    setSuccess("Video deleted.");
+    setError(null);
+  };
 
   const handleLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -192,7 +203,7 @@ export default function VideosPage() {
           )}
         </section>
 
-        <VideoGallery videos={allVideos} />
+        <VideoGallery videos={allVideos} isAdmin={isAuthed} onDelete={handleDeleteVideo} />
       </main>
     </div>
   );
