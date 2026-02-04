@@ -34,6 +34,8 @@ export default function VideosPage() {
   const [videoTitle, setVideoTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const adminUsername = process.env.NEXT_PUBLIC_ADMIN_USERNAME ?? "admin";
+  const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD ?? "admin1234";
 
   useEffect(() => {
     if (!supabaseConfigured) {
@@ -94,7 +96,7 @@ export default function VideosPage() {
     setError(null);
     setSuccess(null);
 
-    if (username.trim() === "admin" && password === "admin123") {
+    if (username.trim() === adminUsername && password === adminPassword) {
       setIsAuthed(true);
       setUsername("");
       setPassword("");
