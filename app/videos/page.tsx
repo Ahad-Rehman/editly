@@ -55,11 +55,11 @@ export default function VideosPage() {
         return;
       }
 
-      const mapped = (data ?? []).map((row: VideoRow) => ({
+      const mapped: VideoItem[] = (data ?? []).map((row: VideoRow) => ({
         id: row.id,
         title: row.title,
         videoUrl: row.video_url,
-        provider: row.provider ?? undefined,
+        provider: row.provider === "vimeo" ? "vimeo" : row.provider === "file" ? "file" : undefined,
         vimeoId: row.vimeo_id ?? undefined,
       }));
 

@@ -38,10 +38,10 @@ export default function OurVideos() {
         return;
       }
 
-      const mapped = (data ?? []).map((row: VideoRow) => ({
+      const mapped: Array<{ title: string; videoUrl: string; duration?: string; provider?: "file" | "vimeo"; vimeoId?: string }> = (data ?? []).map((row: VideoRow) => ({
         title: row.title,
         videoUrl: row.video_url,
-        provider: (row.provider === "vimeo" || row.provider === "file") ? row.provider : undefined,
+        provider: row.provider === "vimeo" ? "vimeo" : row.provider === "file" ? "file" : undefined,
         vimeoId: row.vimeo_id ?? undefined,
       }));
 
