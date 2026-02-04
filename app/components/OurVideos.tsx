@@ -41,7 +41,7 @@ export default function OurVideos() {
       const mapped = (data ?? []).map((row: VideoRow) => ({
         title: row.title,
         videoUrl: row.video_url,
-        provider: row.provider ?? undefined,
+        provider: (row.provider === "vimeo" || row.provider === "file") ? row.provider : undefined,
         vimeoId: row.vimeo_id ?? undefined,
       }));
 
