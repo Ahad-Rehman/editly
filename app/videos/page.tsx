@@ -3,8 +3,10 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
 import VideoGallery from "../components/VideoGallery";
+import { supabase, supabaseConfigured } from "../lib/supabaseClient";
 
 type VideoItem = {
+  id?: string;
   title: string;
   videoUrl: string;
   duration?: string;
@@ -12,13 +14,19 @@ type VideoItem = {
   vimeoId?: string;
 };
 
-const STORAGE_KEY = "portfolio.customVideos";
+type VideoRow = {
+  id: string;
+  title: string;
+  video_url: string;
+  provider: string | null;
+  vimeo_id: string | null;
+};
 
 const baseVideos: VideoItem[] = [];
 
 export default function VideosPage() {
   const [customVideos, setCustomVideos] = useState<VideoItem[]>([]);
-  const [hasLoaded, setHasLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isAuthed, setIsAuthed] = useState(false);
@@ -28,34 +36,55 @@ export default function VideosPage() {
   const [success, setSuccess] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as VideoItem[];
-        if (Array.isArray(parsed)) {
-          setCustomVideos(parsed);
-        }
-      }
-    } catch {
-      setCustomVideos([]);
-    }
-    setHasLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hasLoaded) return;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(customVideos));
-  }, [customVideos, hasLoaded]);
-
-  const allVideos = useMemo(() => [...baseVideos, ...customVideos], [customVideos]);
-  const handleDeleteVideo = (index: number) => {
-    const customIndex = index - baseVideos.length;
-    if (customIndex < 0) {
-      setError("Default videos cannot be deleted.");
-      setSuccess(null);
+    if (!supabaseConfigured) {
+      setError("Supabase is not configured. Please set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.");
       return;
     }
-    setCustomVideos((prev) => prev.filter((_, i) => i !== customIndex));
+
+    const loadVideos = async () => {
+      setIsLoading(true);
+      setError(null);
+      const { data, error: loadError } = await supabase
+        .from("videos")
+        .select("id,title,video_url,provider,vimeo_id")
+        .order("created_at", { ascending: false });
+
+      if (loadError) {
+        setError(loadError.message);
+        setIsLoading(false);
+        return;
+      }
+
+      const mapped = (data ?? []).map((row: VideoRow) => ({
+        id: row.id,
+        title: row.title,
+        videoUrl: row.video_url,
+        provider: row.provider ?? undefined,
+        vimeoId: row.vimeo_id ?? undefined,
+      }));
+
+      setCustomVideos(mapped);
+      setIsLoading(false);
+    };
+
+    loadVideos();
+  }, []);
+
+  const allVideos = useMemo(() => [...baseVideos, ...customVideos], [customVideos]);
+  const handleDeleteVideo = async (video: VideoItem) => {
+    if (!video.id) {
+      setError("Unable to delete this video.");
+      return;
+    }
+
+    const { error: deleteError } = await supabase.from("videos").delete().eq("id", video.id);
+
+    if (deleteError) {
+      setError(deleteError.message);
+      return;
+    }
+
+    setCustomVideos((prev) => prev.filter((item) => item.id !== video.id));
     setSuccess("Video deleted.");
     setError(null);
   };
@@ -76,10 +105,15 @@ export default function VideosPage() {
     setError("Invalid credentials. Please try again.");
   };
 
-  const handleAddVideo = (event: FormEvent<HTMLFormElement>) => {
+  const handleAddVideo = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
     setSuccess(null);
+
+    if (!supabaseConfigured) {
+      setError("Supabase is not configured. Please check your environment variables.");
+      return;
+    }
 
     const trimmed = videoUrl.trim();
     if (!trimmed) {
@@ -91,24 +125,49 @@ export default function VideosPage() {
       const url = new URL(trimmed);
       const hostname = url.hostname.replace("www.", "");
       const vimeoMatch = url.href.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
-
       const customTitle = videoTitle.trim();
+
+      let payload: { title: string; video_url: string; provider?: string; vimeo_id?: string } = {
+        title: customTitle || `Video from ${hostname}`,
+        video_url: url.toString(),
+        provider: "file",
+      };
 
       if (hostname.includes("vimeo.com") && vimeoMatch?.[1]) {
         const vimeoId = vimeoMatch[1];
-        const title = customTitle || `Vimeo video ${vimeoId}`;
-        setCustomVideos((prev) => [...prev, { title, videoUrl: url.toString(), provider: "vimeo", vimeoId }]);
-        setVideoUrl("");
-        setVideoTitle("");
-        setSuccess("Vimeo video added to gallery.");
+        payload = {
+          title: customTitle || `Vimeo video ${vimeoId}`,
+          video_url: url.toString(),
+          provider: "vimeo",
+          vimeo_id: vimeoId,
+        };
+      }
+
+      const { data, error: insertError } = await supabase
+        .from("videos")
+        .insert(payload)
+        .select("id,title,video_url,provider,vimeo_id")
+        .single();
+
+      if (insertError) {
+        setError(insertError.message);
         return;
       }
 
-      const title = customTitle || `Video from ${hostname}`;
-      setCustomVideos((prev) => [...prev, { title, videoUrl: url.toString(), provider: "file" }]);
+      if (data) {
+        const newVideo: VideoItem = {
+          id: data.id,
+          title: data.title,
+          videoUrl: data.video_url,
+          provider: data.provider ?? undefined,
+          vimeoId: data.vimeo_id ?? undefined,
+        };
+        setCustomVideos((prev) => [newVideo, ...prev]);
+      }
+
       setVideoUrl("");
       setVideoTitle("");
-      setSuccess("Video added to gallery.");
+      setSuccess(payload.provider === "vimeo" ? "Vimeo video added to gallery." : "Video added to gallery.");
     } catch {
       setError("Please enter a valid URL (including https://).");
     }
@@ -198,6 +257,10 @@ export default function VideosPage() {
             </div>
           )}
         </section>
+
+        {isLoading && (
+          <div className="mb-6 text-sm text-gray-400">Loading videos...</div>
+        )}
 
         <VideoGallery videos={allVideos} isAdmin={isAuthed} onDelete={handleDeleteVideo} />
       </main>

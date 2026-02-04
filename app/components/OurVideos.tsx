@@ -2,24 +2,54 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { supabase, supabaseConfigured } from "../lib/supabaseClient";
 
 export default function OurVideos() {
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
   const [videos, setVideos] = useState<Array<{ title: string; videoUrl: string; duration?: string; provider?: "file" | "vimeo"; vimeoId?: string }>>([]);
-  const STORAGE_KEY = "portfolio.customVideos";
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  type VideoRow = {
+    id: string;
+    title: string;
+    video_url: string;
+    provider: string | null;
+    vimeo_id: string | null;
+  };
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const parsed = JSON.parse(raw) as Array<{ title: string; videoUrl: string; duration?: string; provider?: "file" | "vimeo"; vimeoId?: string }>;
-        if (Array.isArray(parsed)) {
-          setVideos(parsed);
-        }
-      }
-    } catch {
-      setVideos([]);
+    if (!supabaseConfigured) {
+      setError("Supabase is not configured.");
+      return;
     }
+
+    const loadVideos = async () => {
+      setIsLoading(true);
+      setError(null);
+      const { data, error: loadError } = await supabase
+        .from("videos")
+        .select("id,title,video_url,provider,vimeo_id")
+        .order("created_at", { ascending: false });
+
+      if (loadError) {
+        setError(loadError.message);
+        setIsLoading(false);
+        return;
+      }
+
+      const mapped = (data ?? []).map((row: VideoRow) => ({
+        title: row.title,
+        videoUrl: row.video_url,
+        provider: row.provider ?? undefined,
+        vimeoId: row.vimeo_id ?? undefined,
+      }));
+
+      setVideos(mapped);
+      setIsLoading(false);
+    };
+
+    loadVideos();
   }, []);
 
   const hasVideos = useMemo(() => videos.length > 0, [videos]);
@@ -36,7 +66,15 @@ export default function OurVideos() {
           </p>
         </div>
 
-        {hasVideos ? (
+        {isLoading ? (
+          <div className="text-center text-gray-400 border border-dashed border-gray-800 rounded-2xl p-10">
+            Loading videos...
+          </div>
+        ) : error ? (
+          <div className="text-center text-red-400 border border-dashed border-red-900/60 rounded-2xl p-10">
+            {error}
+          </div>
+        ) : hasVideos ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {videos.map((video, index) => (
             <div

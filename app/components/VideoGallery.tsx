@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 
 type GalleryVideo = {
+  id?: string;
   title: string;
   videoUrl: string;
   duration?: string;
@@ -11,7 +12,7 @@ type GalleryVideo = {
   vimeoId?: string;
 };
 
-export default function VideoGallery({ videos, isAdmin, onDelete }: { videos?: Array<GalleryVideo>; isAdmin?: boolean; onDelete?: (index: number) => void }) {
+export default function VideoGallery({ videos, isAdmin, onDelete }: { videos?: Array<GalleryVideo>; isAdmin?: boolean; onDelete?: (video: GalleryVideo) => void }) {
   const defaultVideos = videos ?? [];
 
   const [query, setQuery] = useState("");
@@ -69,7 +70,7 @@ export default function VideoGallery({ videos, isAdmin, onDelete }: { videos?: A
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onDelete(i);
+                        onDelete(v);
                       }}
                       className="shrink-0 bg-red-500/20 text-red-300 border border-red-500/30 px-3 py-1 rounded-full text-xs hover:bg-red-500/30"
                     >
