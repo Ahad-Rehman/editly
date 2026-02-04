@@ -3,7 +3,15 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 
-export default function VideoGallery({ videos }: { videos?: Array<{ title: string; videoUrl: string; duration?: string }> }) {
+type GalleryVideo = {
+  title: string;
+  videoUrl: string;
+  duration?: string;
+  provider?: "file" | "vimeo";
+  vimeoId?: string;
+};
+
+export default function VideoGallery({ videos }: { videos?: Array<GalleryVideo> }) {
   const defaultVideos = videos ?? [
     { title: "Wedding Teaser", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video1.mp4", duration: "2:30" },
     { title: "George&Gordon Wedding", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video2.mp4", duration: "1:45" },
@@ -16,7 +24,7 @@ export default function VideoGallery({ videos }: { videos?: Array<{ title: strin
   const list = useMemo(() => {
     const q = query.trim().toLowerCase();
     return defaultVideos.filter((v) => v.title.toLowerCase().includes(q));
-  }, [query]);
+  }, [query, defaultVideos]);
 
   return (
     <section className="py-12 lg:py-16 bg-black min-h-screen">
@@ -36,11 +44,22 @@ export default function VideoGallery({ videos }: { videos?: Array<{ title: strin
           {list.map((v, i) => (
             <div key={i} className="group rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 hover:shadow-2xl transition-shadow duration-300">
               <div className="relative aspect-video bg-black/10 cursor-pointer" onClick={() => setSelected(i)}>
-                <video src={v.videoUrl} className="w-full h-full object-cover" muted loop playsInline />
+                {v.provider === "vimeo" && v.vimeoId ? (
+                  <iframe
+                    className="w-full h-full object-cover pointer-events-none"
+                    src={`https://player.vimeo.com/video/${v.vimeoId}?background=1&autoplay=1&muted=1&loop=1`}
+                    title={v.title}
+                    allow="autoplay; fullscreen; picture-in-picture"
+                  />
+                ) : (
+                  <video src={v.videoUrl} className="w-full h-full object-cover" muted loop playsInline />
+                )}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                   <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-black text-2xl shadow-lg transform group-hover:scale-105 transition-transform">▶</div>
                 </div>
-                <div className="absolute bottom-3 right-3 bg-black/70 text-sm px-3 py-1 rounded-full">{v.duration}</div>
+                {v.duration && (
+                  <div className="absolute bottom-3 right-3 bg-black/70 text-sm px-3 py-1 rounded-full">{v.duration}</div>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
               <div className="p-4 bg-gradient-to-t from-gray-900/70 to-transparent">
@@ -63,7 +82,18 @@ export default function VideoGallery({ videos }: { videos?: Array<{ title: strin
             </div>
 
             <div className="flex-1 flex items-center justify-center bg-black rounded-b-xl overflow-hidden">
-              <video className="w-full h-full" src={list[selected].videoUrl} controls autoPlay playsInline style={{ objectFit: 'contain' }} />
+              {list[selected].provider === "vimeo" && list[selected].vimeoId ? (
+                <iframe
+                  className="w-full h-full"
+                  src={`https://player.vimeo.com/video/${list[selected].vimeoId}?autoplay=1&muted=0`}
+                  title={list[selected].title}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  style={{ objectFit: "contain" }}
+                />
+              ) : (
+                <video className="w-full h-full" src={list[selected].videoUrl} controls autoPlay playsInline style={{ objectFit: 'contain' }} />
+              )}
             </div>
           </div>
         </div>

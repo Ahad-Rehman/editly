@@ -1,7 +1,104 @@
+"use client";
+
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
 import VideoGallery from "../components/VideoGallery";
 
+type VideoItem = {
+  title: string;
+  videoUrl: string;
+  duration?: string;
+  provider?: "file" | "vimeo";
+  vimeoId?: string;
+};
+
+const STORAGE_KEY = "portfolio.customVideos";
+
+const baseVideos: VideoItem[] = [
+  { title: "Wedding Teaser", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video1.mp4", duration: "2:30" },
+  { title: "George&Gordon Wedding", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video2.mp4", duration: "1:45" },
+  { title: "Katelyn & Andrew's Wedding", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video3.mp4", duration: "3:15" },
+];
+
 export default function VideosPage() {
+  const [customVideos, setCustomVideos] = useState<VideoItem[]>([]);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isAuthed, setIsAuthed] = useState(false);
+  const [videoUrl, setVideoUrl] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as VideoItem[];
+        if (Array.isArray(parsed)) {
+          setCustomVideos(parsed);
+        }
+      }
+    } catch {
+      setCustomVideos([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(customVideos));
+  }, [customVideos]);
+
+  const allVideos = useMemo(() => [...baseVideos, ...customVideos], [customVideos]);
+
+  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    if (username.trim() === "admin" && password === "admin123") {
+      setIsAuthed(true);
+      setUsername("");
+      setPassword("");
+      setSuccess("Signed in successfully.");
+      return;
+    }
+
+    setError("Invalid credentials. Please try again.");
+  };
+
+  const handleAddVideo = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    const trimmed = videoUrl.trim();
+    if (!trimmed) {
+      setError("Please enter a video URL.");
+      return;
+    }
+
+    try {
+      const url = new URL(trimmed);
+      const hostname = url.hostname.replace("www.", "");
+      const vimeoMatch = url.href.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
+
+      if (hostname.includes("vimeo.com") && vimeoMatch?.[1]) {
+        const vimeoId = vimeoMatch[1];
+        const title = `Vimeo video ${vimeoId}`;
+        setCustomVideos((prev) => [...prev, { title, videoUrl: url.toString(), provider: "vimeo", vimeoId }]);
+        setVideoUrl("");
+        setSuccess("Vimeo video added to gallery.");
+        return;
+      }
+
+      const title = `Video from ${hostname}`;
+      setCustomVideos((prev) => [...prev, { title, videoUrl: url.toString(), provider: "file" }]);
+      setVideoUrl("");
+      setSuccess("Video added to gallery.");
+    } catch {
+      setError("Please enter a valid URL (including https://).");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black">
       <header className="section-container pt-20 pb-12 relative">
@@ -26,7 +123,62 @@ export default function VideosPage() {
       </header>
 
       <main className="section-container pb-24">
-        <VideoGallery />
+        <section className="mb-12 rounded-2xl border border-gray-800 bg-gray-900/50 p-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+            <div>
+              <h2 className="text-2xl font-bold">Admin Panel</h2>
+              <p className="text-gray-400 text-sm">Sign in as admin to add a new video URL to the gallery.</p>
+            </div>
+
+            {!isAuthed ? (
+              <form onSubmit={handleLogin} className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                <input
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Username"
+                  className="px-4 py-3 rounded-full bg-black border border-gray-800 text-white outline-none focus:ring-2 focus:ring-primary/40"
+                />
+                <input
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  placeholder="Password"
+                  className="px-4 py-3 rounded-full bg-black border border-gray-800 text-white outline-none focus:ring-2 focus:ring-primary/40"
+                />
+                <button
+                  type="submit"
+                  className="bg-primary hover:bg-primary-dark text-black font-semibold px-6 py-3 rounded-full transition-all hover:scale-105"
+                >
+                  Sign In
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleAddVideo} className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                <input
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  placeholder="https://example.com/video.mp4 or https://vimeo.com/123456"
+                  className="px-4 py-3 rounded-full bg-black border border-gray-800 text-white outline-none focus:ring-2 focus:ring-primary/40 min-w-[260px]"
+                />
+                <button
+                  type="submit"
+                  className="bg-primary hover:bg-primary-dark text-black font-semibold px-6 py-3 rounded-full transition-all hover:scale-105"
+                >
+                  Add Video
+                </button>
+              </form>
+            )}
+          </div>
+
+          {(error || success) && (
+            <div className="mt-4 text-sm">
+              {error && <span className="text-red-400">{error}</span>}
+              {!error && success && <span className="text-green-400">{success}</span>}
+            </div>
+          )}
+        </section>
+
+        <VideoGallery videos={allVideos} />
       </main>
     </div>
   );
