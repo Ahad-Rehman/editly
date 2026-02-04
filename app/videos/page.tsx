@@ -27,6 +27,7 @@ export default function VideosPage() {
   const [password, setPassword] = useState("");
   const [isAuthed, setIsAuthed] = useState(false);
   const [videoUrl, setVideoUrl] = useState("");
+  const [videoTitle, setVideoTitle] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -84,18 +85,22 @@ export default function VideosPage() {
       const hostname = url.hostname.replace("www.", "");
       const vimeoMatch = url.href.match(/vimeo\.com\/(?:video\/)?(\d+)/i);
 
+      const customTitle = videoTitle.trim();
+
       if (hostname.includes("vimeo.com") && vimeoMatch?.[1]) {
         const vimeoId = vimeoMatch[1];
-        const title = `Vimeo video ${vimeoId}`;
+        const title = customTitle || `Vimeo video ${vimeoId}`;
         setCustomVideos((prev) => [...prev, { title, videoUrl: url.toString(), provider: "vimeo", vimeoId }]);
         setVideoUrl("");
+        setVideoTitle("");
         setSuccess("Vimeo video added to gallery.");
         return;
       }
 
-      const title = `Video from ${hostname}`;
+      const title = customTitle || `Video from ${hostname}`;
       setCustomVideos((prev) => [...prev, { title, videoUrl: url.toString(), provider: "file" }]);
       setVideoUrl("");
+      setVideoTitle("");
       setSuccess("Video added to gallery.");
     } catch {
       setError("Please enter a valid URL (including https://).");
@@ -157,6 +162,12 @@ export default function VideosPage() {
               </form>
             ) : (
               <form onSubmit={handleAddVideo} className="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                <input
+                  value={videoTitle}
+                  onChange={(e) => setVideoTitle(e.target.value)}
+                  placeholder="Video title (optional)"
+                  className="px-4 py-3 rounded-full bg-black border border-gray-800 text-white outline-none focus:ring-2 focus:ring-primary/40 min-w-[220px]"
+                />
                 <input
                   value={videoUrl}
                   onChange={(e) => setVideoUrl(e.target.value)}
