@@ -22,6 +22,7 @@ const baseVideos: VideoItem[] = [
 
 export default function VideosPage() {
   const [customVideos, setCustomVideos] = useState<VideoItem[]>([]);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isAuthed, setIsAuthed] = useState(false);
@@ -41,11 +42,13 @@ export default function VideosPage() {
     } catch {
       setCustomVideos([]);
     }
+    setHasLoaded(true);
   }, []);
 
   useEffect(() => {
+    if (!hasLoaded) return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(customVideos));
-  }, [customVideos]);
+  }, [customVideos, hasLoaded]);
 
   const allVideos = useMemo(() => [...baseVideos, ...customVideos], [customVideos]);
 
