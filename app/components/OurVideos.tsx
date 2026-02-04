@@ -1,28 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 export default function OurVideos() {
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
+  const [videos, setVideos] = useState<Array<{ title: string; videoUrl: string; duration?: string; provider?: "file" | "vimeo"; vimeoId?: string }>>([]);
+  const STORAGE_KEY = "portfolio.customVideos";
 
-  const videos = [
-    {
-      title: "Wedding Teaser",
-      videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video1.mp4",
-      duration: "2:30",
-    },
-    {
-      title: "George&Gordon Wedding",
-      videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video2.mp4",
-      duration: "1:45",
-    },
-    {
-      title: "Katelyn & Andrew's Wedding",
-      videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video3.mp4",
-      duration: "3:15",
-    },
-  ];
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as Array<{ title: string; videoUrl: string; duration?: string; provider?: "file" | "vimeo"; vimeoId?: string }>;
+        if (Array.isArray(parsed)) {
+          setVideos(parsed);
+        }
+      }
+    } catch {
+      setVideos([]);
+    }
+  }, []);
+
+  const hasVideos = useMemo(() => videos.length > 0, [videos]);
 
   return (
     <section id="videos" className="py-24 bg-gradient-to-b from-black to-gray-900">
@@ -36,8 +36,9 @@ export default function OurVideos() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {videos.map((video, index) => (
+        {hasVideos ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {videos.map((video, index) => (
             <div
               key={index}
               onClick={() => setSelectedVideo(index)}
@@ -45,18 +46,27 @@ export default function OurVideos() {
             >
               <div className="aspect-video relative overflow-hidden bg-gray-800">
                 {/* Video element */}
-                <video
-                  className="absolute inset-0 w-full h-full object-cover"
-                  src={video.videoUrl}
-                  muted
-                  loop
-                  playsInline
-                  onMouseEnter={(e) => e.currentTarget.play()}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.pause();
-                    e.currentTarget.currentTime = 0;
-                  }}
-                />
+                {video.provider === "vimeo" && video.vimeoId ? (
+                  <iframe
+                    className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+                    src={`https://player.vimeo.com/video/${video.vimeoId}?background=1&autoplay=1&muted=1&loop=1`}
+                    title={video.title}
+                    allow="autoplay; fullscreen; picture-in-picture"
+                  />
+                ) : (
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover"
+                    src={video.videoUrl}
+                    muted
+                    loop
+                    playsInline
+                    onMouseEnter={(e) => e.currentTarget.play()}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.pause();
+                      e.currentTarget.currentTime = 0;
+                    }}
+                  />
+                )}
                 
                 {/* Overlay */}
                 <div className="absolute inset-0 bg-black/40 opacity-100 group-hover:opacity-0 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
@@ -68,9 +78,11 @@ export default function OurVideos() {
                 </div>
 
                 {/* Duration badge */}
-                <div className="absolute bottom-4 right-4 bg-black/80 px-3 py-1 rounded-full text-sm">
-                  {video.duration}
-                </div>
+                {video.duration && (
+                  <div className="absolute bottom-4 right-4 bg-black/80 px-3 py-1 rounded-full text-sm">
+                    {video.duration}
+                  </div>
+                )}
               </div>
 
               <div className="p-6 bg-gray-900/50 border border-gray-800 group-hover:border-primary/50 transition-colors">
@@ -79,8 +91,13 @@ export default function OurVideos() {
                 </div>
               </div>
             </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="text-center text-gray-400 border border-dashed border-gray-800 rounded-2xl p-10">
+            No videos added yet. Add videos from the admin panel on the Videos page.
+          </div>
+        )}
 
         <div className="text-center mt-12">
           <Link href="/videos" className="inline-block">
@@ -92,7 +109,7 @@ export default function OurVideos() {
       </div>
 
       {/* Video Modal */}
-      {selectedVideo !== null && (
+      {selectedVideo !== null && videos[selectedVideo] && (
         <div
           className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-[5px] animate-fade-in"
           onClick={() => setSelectedVideo(null)}
@@ -130,15 +147,26 @@ export default function OurVideos() {
 
             {/* Video player */}
             <div className="flex-1 flex items-center justify-center bg-black rounded-b-xl overflow-hidden min-h-0">
-              <video
-                className="w-full h-full"
-                src={videos[selectedVideo].videoUrl}
-                controls
-                autoPlay
-                playsInline
-                controlsList="nodownload"
-                style={{ objectFit: 'contain' }}
-              />
+              {videos[selectedVideo].provider === "vimeo" && videos[selectedVideo].vimeoId ? (
+                <iframe
+                  className="w-full h-full"
+                  src={`https://player.vimeo.com/video/${videos[selectedVideo].vimeoId}?autoplay=1&muted=0`}
+                  title={videos[selectedVideo].title}
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                  style={{ objectFit: "contain" }}
+                />
+              ) : (
+                <video
+                  className="w-full h-full"
+                  src={videos[selectedVideo].videoUrl}
+                  controls
+                  autoPlay
+                  playsInline
+                  controlsList="nodownload"
+                  style={{ objectFit: 'contain' }}
+                />
+              )}
             </div>
           </div>
         </div>

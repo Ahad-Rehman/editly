@@ -12,11 +12,7 @@ type GalleryVideo = {
 };
 
 export default function VideoGallery({ videos, isAdmin, onDelete }: { videos?: Array<GalleryVideo>; isAdmin?: boolean; onDelete?: (index: number) => void }) {
-  const defaultVideos = videos ?? [
-    { title: "Wedding Teaser", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video1.mp4", duration: "2:30" },
-    { title: "George&Gordon Wedding", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video2.mp4", duration: "1:45" },
-    { title: "Katelyn & Andrew's Wedding", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video3.mp4", duration: "3:15" },
-  ];
+  const defaultVideos = videos ?? [];
 
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<number | null>(null);

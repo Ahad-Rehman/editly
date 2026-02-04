@@ -14,11 +14,7 @@ type VideoItem = {
 
 const STORAGE_KEY = "portfolio.customVideos";
 
-const baseVideos: VideoItem[] = [
-  { title: "Wedding Teaser", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video1.mp4", duration: "2:30" },
-  { title: "George&Gordon Wedding", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video2.mp4", duration: "1:45" },
-  { title: "Katelyn & Andrew's Wedding", videoUrl: "https://github.com/Ahad-Rehman/editly/releases/download/v1.0.0/video3.mp4", duration: "3:15" },
-];
+const baseVideos: VideoItem[] = [];
 
 export default function VideosPage() {
   const [customVideos, setCustomVideos] = useState<VideoItem[]>([]);
